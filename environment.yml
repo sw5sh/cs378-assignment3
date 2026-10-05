@@ -1,0 +1,21 @@
+name: vidur
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - setuptools
+  - pip
+  - numpy
+  - jupyterlab
+  - matplotlib
+  - pyyaml
+  - snakeviz
+  - scikit-learn
+  - fasteners
+  - ray-all
+  - streamlit
+  - randomname
+  - pip:
+    - ddsketch
+    - paretoset
+    - SciencePlots
