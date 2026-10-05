@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Sarathi next-chunk sizes: decode is 1; prefill is min(remaining, leftover chunk), never negative."""
+"""Part 3: _get_request_next_num_tokens, the tokens a request adds to one step.
+Run with ``pytest tests/test_sarathi_chunk.py``."""
 from __future__ import annotations
 
 import re
@@ -61,22 +62,3 @@ def _make_test(label, request, contains_prefill, num_batch_tokens, chunk_size, e
 
 for _case in CASES:
     globals()["test_" + re.sub(r"\W+", "_", _case[0]).strip("_")] = _make_test(*_case)
-
-
-def main() -> None:
-    tests = [(name, fn) for name, fn in globals().items() if name.startswith("test_")]
-    fails = 0
-    for name, fn in tests:
-        try:
-            fn()
-            print(f"PASS {name}")
-        except Exception as exc:  # NotImplementedError, AssertionError, or a bug
-            msg = str(exc) if isinstance(exc, AssertionError) else f"{type(exc).__name__}: {exc}"
-            print(f"FAIL {name}: {msg}")
-            fails += 1
-    print("ALL PASS" if not fails else f"{fails} FAILED")
-    sys.exit(1 if fails else 0)
-
-
-if __name__ == "__main__":
-    main()

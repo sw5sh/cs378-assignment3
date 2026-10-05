@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""Part 5: LOR and LOT routers. Run with ``pytest tests/test_routing.py`` or
-``python tests/test_routing.py``."""
+"""Part 5: LOR and LOT routers. Run with ``pytest tests/test_routing.py``."""
 from __future__ import annotations
 
 import sys
@@ -122,22 +121,3 @@ def test_lot_balances_a_burst_by_work():
 def test_lot_tie_goes_to_lowest_replica():
     replicas, _ = _route(_router(LOTGlobalScheduler, num_replicas=3, new=[_req()]))
     assert replicas == [0], f"all replicas empty: pick the lowest id, got {replicas}"
-
-
-def main() -> None:
-    tests = [(name, fn) for name, fn in globals().items() if name.startswith("test_")]
-    fails = 0
-    for name, fn in tests:
-        try:
-            fn()
-            print(f"PASS {name}")
-        except Exception as exc:  # NotImplementedError, AssertionError, or a bug
-            msg = str(exc) if isinstance(exc, AssertionError) else f"{type(exc).__name__}: {exc}"
-            print(f"FAIL {name}: {msg}")
-            fails += 1
-    print("ALL PASS" if not fails else f"{fails} FAILED")
-    sys.exit(1 if fails else 0)
-
-
-if __name__ == "__main__":
-    main()

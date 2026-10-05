@@ -160,7 +160,7 @@ Implement the **entire** class in
    `get_max_batch_size() * self._replica.num_pipeline_stages`.
 
 ```bash
-python tests/test_memory_planner.py
+pytest tests/test_memory_planner.py
 ```
 
 ---
@@ -387,8 +387,8 @@ tokens left, and a new 300-token prompt is waiting.
 | 2 | 3 × 1 | 391 (done) | starts with 118 | 512 |
 
 ```bash
-python tests/test_sarathi_chunk.py
-python tests/test_sarathi_batch.py
+pytest tests/test_sarathi_chunk.py
+pytest tests/test_sarathi_batch.py
 ```
 
 #### Run and compare
@@ -475,7 +475,7 @@ The long prompt stops losing to fresh short ones after (4000 − 100) / 100 =
 39 s of waiting.
 
 ```bash
-python tests/test_spf.py
+pytest tests/test_spf.py
 ```
 
 #### Run and compare
@@ -577,7 +577,7 @@ Round-robin and LOR put both long requests on replica 0; LOT gives each replica
 one long and one short.
 
 ```bash
-python tests/test_routing.py
+pytest tests/test_routing.py
 ```
 
 #### Run and compare
@@ -637,12 +637,15 @@ Paste the output directories into `notebooks/replicas.ipynb`.
 ### How to test
 
 ```bash
-bash scripts/run_tests.sh
+bash scripts/run_tests.sh          # every test (same as `pytest`)
+pytest tests/test_sarathi_batch.py # one file
+pytest tests/test_sarathi_batch.py -k step4   # tests whose name contains "step4"
+pytest -x                          # stop at the first failure
 ```
 
-Runs every test: `test_memory_planner.py`, `test_workload.py`,
-`test_sarathi_chunk.py`, `test_sarathi_batch.py`, `test_spf.py`,
-`test_routing.py`. Each test file also runs on its own with `python` or `pytest`.
+Every test is named after the rule it checks, for example
+`test_step4_stops_when_memory_full`, and its failure message says what was
+expected.
 
 ---
 
@@ -678,7 +681,7 @@ Zip these six files:
 Submit `submission.zip` and a **PDF report** with:
 
 * name, EID
-* `bash scripts/run_tests.sh` output
+* `bash scripts/run_tests.sh` output (the pytest summary)
 * Part 1 arrivals, predicted-wait, and KV-in-use figures; answers Q1–Q4
 * Part 2 predicted-vs-measured table and plots, time-between-tokens plot, answers Q1–Q4
 * Part 3 time-between-tokens and wait plots, answers Q1–Q3 (with the two

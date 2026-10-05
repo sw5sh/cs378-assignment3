@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""Part 4: shortest prompt first, with aging. Run with
-``pytest tests/test_spf.py`` or ``python tests/test_spf.py``."""
+"""Part 4: shortest prompt first, with aging. Run with ``pytest tests/test_spf.py``."""
 from __future__ import annotations
 
 import sys
@@ -89,22 +88,3 @@ def test_aging_has_not_caught_up_yet():
     s = _sched(aging=50.0, now=10.0, queue=[long_, short])
     s._order_waiting_queue()
     assert s._request_queue[0] is short, "after only 10 s, the short prompt still goes first"
-
-
-def main() -> None:
-    tests = [(name, fn) for name, fn in globals().items() if name.startswith("test_")]
-    fails = 0
-    for name, fn in tests:
-        try:
-            fn()
-            print(f"PASS {name}")
-        except Exception as exc:  # NotImplementedError, AssertionError, or a bug
-            msg = str(exc) if isinstance(exc, AssertionError) else f"{type(exc).__name__}: {exc}"
-            print(f"FAIL {name}: {msg}")
-            fails += 1
-    print("ALL PASS" if not fails else f"{fails} FAILED")
-    sys.exit(1 if fails else 0)
-
-
-if __name__ == "__main__":
-    main()

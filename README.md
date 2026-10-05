@@ -38,7 +38,7 @@ part are in `notebooks/`.
 ## Running
 
 ```bash
-bash scripts/run_tests.sh                       # every test
+bash scripts/run_tests.sh                       # every test (pytest)
 QPS=5.53 bash scripts/run_default.sh traces/azure_conversation.csv               # vLLM
 SCHED=sarathi CHUNK=512 QPS=5.53 bash scripts/run_default.sh traces/azure_conversation.csv
 SCHED=spf CHUNK=512 AGING=100 QPS=5.53 bash scripts/run_default.sh traces/azure_conversation.csv

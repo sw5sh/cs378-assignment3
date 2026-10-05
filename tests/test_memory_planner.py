@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""MemoryPlanner byte counts and batch capacity for the course SKUs."""
+"""Warmup: MemoryPlanner byte counts and capacity for several models and GPUs.
+Run with ``pytest tests/test_memory_planner.py``."""
 from __future__ import annotations
 
 import re
@@ -85,22 +86,3 @@ def _make_test(label, kwargs):
 
 for _label, _kwargs in CASES:
     globals()["test_" + re.sub(r"\W+", "_", _label).strip("_")] = _make_test(_label, _kwargs)
-
-
-def main() -> None:
-    tests = [(name, fn) for name, fn in globals().items() if name.startswith("test_")]
-    fails = 0
-    for name, fn in tests:
-        try:
-            fn()
-            print(f"PASS {name}")
-        except Exception as exc:  # NotImplementedError, AssertionError, or a bug
-            msg = str(exc) if isinstance(exc, AssertionError) else f"{type(exc).__name__}: {exc}"
-            print(f"FAIL {name}: {msg}")
-            fails += 1
-    print("ALL PASS" if not fails else f"{fails} FAILED")
-    sys.exit(1 if fails else 0)
-
-
-if __name__ == "__main__":
-    main()

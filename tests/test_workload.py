@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""Part 1 workload functions. Run with ``pytest tests/test_workload.py`` or
-``python tests/test_workload.py``."""
+"""Part 1 workload functions. Run with ``pytest tests/test_workload.py``."""
 from __future__ import annotations
 
 import sys
@@ -112,22 +111,3 @@ def test_kv_in_use_caps_batch_size():
     _close(out["running"], [1, 1, 1], "running with max_batch_size=1")
     _close(out["kv_gb"], np.array([110, 1100, 1100]) * 131072 / 1e9,
            "kv_gb with max_batch_size=1 (earliest arrival in the system holds KV)")
-
-
-def main() -> None:
-    tests = [(name, fn) for name, fn in globals().items() if name.startswith("test_")]
-    fails = 0
-    for name, fn in tests:
-        try:
-            fn()
-            print(f"PASS {name}")
-        except Exception as exc:  # NotImplementedError, AssertionError, or a bug
-            msg = str(exc) if isinstance(exc, AssertionError) else f"{type(exc).__name__}: {exc}"
-            print(f"FAIL {name}: {msg}")
-            fails += 1
-    print("ALL PASS" if not fails else f"{fails} FAILED")
-    sys.exit(1 if fails else 0)
-
-
-if __name__ == "__main__":
-    main()

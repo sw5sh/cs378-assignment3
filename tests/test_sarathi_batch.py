@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """Part 3: Sarathi batch building, one test per rule, grouped by function.
-Run with ``pytest tests/test_sarathi_batch.py`` or
-``python tests/test_sarathi_batch.py``."""
+Run with ``pytest tests/test_sarathi_batch.py``."""
 from __future__ import annotations
 
 import signal
@@ -296,22 +295,3 @@ def test_worked_example_two_iterations():
     s._preempted_requests = list(first.requests)
     toks = list(_guard(s._get_next_batch).num_tokens)
     assert toks == [1, 1, 1, 391, 118], f"iteration 2: got {toks}, expected [1, 1, 1, 391, 118]"
-
-
-def main() -> None:
-    tests = [(name, fn) for name, fn in globals().items() if name.startswith("test_")]
-    fails = 0
-    for name, fn in tests:
-        try:
-            fn()
-            print(f"PASS {name}")
-        except Exception as exc:  # NotImplementedError, AssertionError, or a bug
-            msg = str(exc) if isinstance(exc, AssertionError) else f"{type(exc).__name__}: {exc}"
-            print(f"FAIL {name}: {msg}")
-            fails += 1
-    print("ALL PASS" if not fails else f"{fails} FAILED")
-    sys.exit(1 if fails else 0)
-
-
-if __name__ == "__main__":
-    main()

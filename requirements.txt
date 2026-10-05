@@ -5,3 +5,4 @@ ddsketch
 matplotlib
 SciencePlots
 fasteners
+pytest
